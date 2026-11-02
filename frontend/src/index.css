@@ -1,0 +1,2 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+:root{font-family:Inter,system-ui,sans-serif;color:#f4f8ff;background:#050914;font-synthesis:none;text-rendering:optimizeLegibility;font-optical-sizing:auto}*{box-sizing:border-box}html,body,#root{min-height:100%;margin:0}body{min-width:320px;background:#050914}button,input,select,textarea{font:inherit}button{cursor:pointer}::selection{background:#18d9ff55;color:white}
