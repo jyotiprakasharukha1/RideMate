@@ -265,7 +265,7 @@ function App() {
     try {
       const query = new URLSearchParams();
       if (filterStartDate && filterEndDate) { query.set("startDate", filterStartDate); query.set("endDate", filterEndDate); }
-      const response = await fetch(`https://76kdktfr-5000.inc1.devtunnels.ms/api/vehicles${query.toString() ? `?${query}` : ""}`);
+      const response = await fetch(`/api/vehicles${query.toString() ? `?${query}` : ""}`);
       const data = await response.json();
 
       if (!response.ok || !data.success) {
@@ -312,10 +312,10 @@ function App() {
 
     try {
       const [pendingResponse, approvedResponse] = await Promise.all([
-        fetch("https://76kdktfr-5000.inc1.devtunnels.ms/api/admin/vehicles/pending", {
+        fetch("/api/admin/vehicles/pending", {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        fetch("https://76kdktfr-5000.inc1.devtunnels.ms/api/vehicles")
+        fetch("/api/vehicles")
       ]);
       const pendingData = await pendingResponse.json();
       const approvedData = await approvedResponse.json();
@@ -368,7 +368,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `https://76kdktfr-5000.inc1.devtunnels.ms/api/admin/vehicles/${vehicleId}/status`,
+        `/api/admin/vehicles/${vehicleId}/status`,
         {
           method: "PATCH",
           headers: {
@@ -421,7 +421,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `https://76kdktfr-5000.inc1.devtunnels.ms/api/admin/vehicles/${vehicle._id}`,
+        `/api/admin/vehicles/${vehicle._id}`,
         {
           method: "DELETE",
           headers: {
@@ -466,7 +466,7 @@ function App() {
     setOwnerError("");
 
     try {
-      const response = await fetch("https://76kdktfr-5000.inc1.devtunnels.ms/api/owner/vehicles", {
+      const response = await fetch("/api/owner/vehicles", {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await response.json();
@@ -484,7 +484,7 @@ function App() {
     const token = sessionStorage.getItem("ridemate_token");
     if (!token) return;
     try {
-      const response = await fetch("https://76kdktfr-5000.inc1.devtunnels.ms/api/tracking/owner/fleet", {
+      const response = await fetch("/api/tracking/owner/fleet", {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await response.json();
@@ -503,7 +503,7 @@ function App() {
     setTrackingLoading(true);
     setTrackingError("");
     try {
-      const response = await fetch(`https://76kdktfr-5000.inc1.devtunnels.ms/api/tracking/${bookingId}/start`, {
+      const response = await fetch(`/api/tracking/${bookingId}/start`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -525,7 +525,7 @@ function App() {
     setTrackingLoading(true);
     setTrackingError("");
     try {
-      const response = await fetch(`https://76kdktfr-5000.inc1.devtunnels.ms/api/tracking/${bookingId}/stop`, {
+      const response = await fetch(`/api/tracking/${bookingId}/stop`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -613,7 +613,7 @@ function App() {
         images: ownerPhotos.map((photo) => photo.dataUrl)
       };
 
-      const response = await fetch("https://76kdktfr-5000.inc1.devtunnels.ms/api/vehicles", {
+      const response = await fetch("/api/vehicles", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -646,7 +646,7 @@ function App() {
     const token = sessionStorage.getItem("ridemate_token");
     if (!token) return;
     try {
-      const response = await fetch("https://76kdktfr-5000.inc1.devtunnels.ms/api/bookings/my", { headers: { Authorization: `Bearer ${token}` } });
+      const response = await fetch("/api/bookings/my", { headers: { Authorization: `Bearer ${token}` } });
       const data = await response.json();
       if (!response.ok || !data.success) throw new Error(data.message || "Could not load bookings.");
       setCustomerBookings(data.bookings || []);
@@ -658,7 +658,7 @@ function App() {
     const token = sessionStorage.getItem("ridemate_token");
     if (!token) return;
     try {
-      const response = await fetch(`https://76kdktfr-5000.inc1.devtunnels.ms/api/tracking/${bookingId}`, {
+      const response = await fetch(`/api/tracking/${bookingId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await response.json();
@@ -704,7 +704,7 @@ function App() {
     try {
       // Record the customer's consent on the server before sending GPS data.
       const consentResponse = await fetch(
-        `https://76kdktfr-5000.inc1.devtunnels.ms/api/tracking/${bookingId}/consent`,
+        `/api/tracking/${bookingId}/consent`,
         {
           method: "POST",
           headers: {
@@ -736,7 +736,7 @@ function App() {
             };
 
             const response = await fetch(
-              `https://76kdktfr-5000.inc1.devtunnels.ms/api/tracking/${bookingId}/location`,
+              `/api/tracking/${bookingId}/location`,
               {
                 method: "PUT",
                 headers: {
@@ -837,7 +837,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `https://76kdktfr-5000.inc1.devtunnels.ms/api/tracking/${bookingId}/pause`,
+        `/api/tracking/${bookingId}/pause`,
         {
           method: "POST",
           headers: {
@@ -869,7 +869,7 @@ function App() {
   const saveCustomerDestination = async (bookingId, destination) => {
     const token = sessionStorage.getItem("ridemate_token");
     try {
-      const response = await fetch(`https://76kdktfr-5000.inc1.devtunnels.ms/api/tracking/${bookingId}/destination`, {
+      const response = await fetch(`/api/tracking/${bookingId}/destination`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify(destination)
@@ -918,7 +918,7 @@ function App() {
     if (authenticatedUser?.role !== "customer") { setBookingError("Only customer accounts can book vehicles."); return; }
     setBookingSubmitting(true); setBookingError(""); setBookingNotice("");
     try {
-      const response = await fetch("https://76kdktfr-5000.inc1.devtunnels.ms/api/bookings", {
+      const response = await fetch("/api/bookings", {
         method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ vehicleId: selectedVehicle.id, startDate: bookingStartDate, endDate: bookingEndDate })
       });
@@ -937,7 +937,7 @@ function App() {
     if (!token || !window.confirm("Cancel this booking?")) return;
     setBookingError(""); setBookingNotice("");
     try {
-      const response = await fetch(`https://76kdktfr-5000.inc1.devtunnels.ms/api/bookings/${bookingId}/cancel`, {
+      const response = await fetch(`/api/bookings/${bookingId}/cancel`, {
         method: "PATCH", headers: { Authorization: `Bearer ${token}` }
       });
       const data = await response.json();
@@ -958,7 +958,7 @@ function App() {
   };
 
   const postAuthRequest = async (path, payload) => {
-    const response = await fetch(`https://76kdktfr-5000.inc1.devtunnels.ms/api/auth/${path}`, {
+    const response = await fetch(`/api/auth/${path}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
@@ -1124,7 +1124,7 @@ function App() {
       }
 
       try {
-        const response = await fetch("https://76kdktfr-5000.inc1.devtunnels.ms/api/auth/profile", {
+        const response = await fetch("/api/auth/profile", {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` }
         });
@@ -2394,3 +2394,4 @@ function App() {
 }
 
 export default App;
+  

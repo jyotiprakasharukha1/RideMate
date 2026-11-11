@@ -48,3 +48,16 @@
 .ridemate-start-share{background:#ff7135;color:#111}.ridemate-stop-share{background:#344554;color:#fff}
 @media(max-width:900px){.ridemate-fleet-layout{grid-template-columns:1fr}.ridemate-fleet-sidebar{order:2}.ridemate-fleet-map-area{order:1}}
 @media(max-width:560px){.ridemate-fleet-panel{padding:13px}.ridemate-live-map-card{padding:9px}.ridemate-destination-form{flex-direction:column}.ridemate-customer-tracking-card{padding:9px}}
+.ridemate-cesium-map {
+  position: relative;
+  overflow: hidden;
+  min-height: 300px;
+  background: #101827;
+}
+
+.ridemate-cesium-map .cesium-viewer,
+.ridemate-cesium-map .cesium-widget,
+.ridemate-cesium-map canvas {
+  width: 100%;
+  height: 100%;
+}
