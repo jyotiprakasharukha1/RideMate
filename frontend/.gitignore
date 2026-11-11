@@ -27,3 +27,10 @@ dist-ssr
 .env
 .env.*
 !.env.example
+# AWS and deployment files
+.aws/
+*.pem
+
+# Runtime files
+coverage/
+uploads/
